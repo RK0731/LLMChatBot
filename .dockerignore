@@ -1,0 +1,72 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+.python-version
+
+# Test output
+coverage/
+*.cover
+*.py,cover
+.hypothesis/
+
+# Pytest cache
+.pytest_cache/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Docker-related
+Dockerfile
+docker-compose.yml
+
+# VS Code
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.md
+
+# Git
+.git/
+.gitignore
+
+# Directories
+.secret/
+assets/
+cache/
+data/
+deployment/
+logs/
+qdrant_storage/
+tests/
