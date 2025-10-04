@@ -1,0 +1,5 @@
+boto3>=1.40.25
+fastapi==0.116.1
+langchain-core==0.3.75
+langchain-aws==0.2.31
+langchain-community==0.3.30
