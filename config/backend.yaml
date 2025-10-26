@@ -1,9 +1,10 @@
-CHAT_ENGINE:
-  host:
-    darwin: "0.0.0.0"
-    windows: "localhost"
-    ec2: "0.0.0.0"
-  port: 8080
+fastapi:
+  dev:
+    host: "0.0.0.0"
+    port: 8080
+  prod:
+    host: "127.0.0.1"
+    port: 8080
 
 converse_engine:
   provider: "AWS"
@@ -12,23 +13,10 @@ converse_engine:
   max_tokens: 2048
 
 content_generation_model:
-  default:
-    provider: "AWS"
-    modelId: "anthropic.claude-3-haiku-20240307-v1:0"
-    contextSize: 16384
-    maxTokens: 256
-
-RAG_text_generation_model:
-  default:
-    provider: "AWS"
-    modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0"
-    contextSize: 200000
-    maxTokens: 4096
-  preferred:
-    provider: "AWS"
-    modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0"  
-    contextSize: 200000
-    maxTokens: 4096
+  provider: "AWS"
+  modelId: "anthropic.claude-3-haiku-20240307-v1:0"
+  temperature: 0.5
+  maxTokens: 512
   
 RAG_embedding_model:
   default:
@@ -38,13 +26,18 @@ RAG_embedding_model:
     provider: "Cohere"
     modelId: "cohere.embed-english-v3"
 
-BACKEND_DB:
+backend_db:
   host: 
     remote: "100.127.0.244"
     ec2: "172.17.0.1" # Docker’s gateway IP
   port: 5432
-  database: "app_db"
-  user: "app_backend"
-  password: "@ppBackendP@ssw0rd" 
+  database: "xxx"
+  user: "xxx"
+  password: "xxx" 
   connect_timeout: 7
 
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  ttl: 7200

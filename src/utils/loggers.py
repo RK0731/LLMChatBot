@@ -92,20 +92,9 @@ LOG_CONFIG = {
             "handlers": ["app_log_file", "app_console"],
             "level": "DEBUG",
             "propagate": False
-        },
-        "llama_index.core.chat_engine.condense_plus_context": {
-            "handlers": ["chat_engine_log_file"],
-            "level": "DEBUG",
-            "propagate": False
-        },        
-        "query_logger": {
-            "handlers": ["query_log_file", "app_console"],
-            "level": "DEBUG",
-            "propagate": False
         }
     },
 }
-
 
 def setup_logging(keep:int=5):
     # verify log directories
@@ -121,37 +110,3 @@ def setup_logging(keep:int=5):
             shutil.rmtree(folder_path)
     # reset all logger's config
     dictConfig(LOG_CONFIG)
-
-
-class QueryLogger:
-    def __init__(self):
-        self.logger = logging.getLogger('rag_server')
-
-    def log_query(self, query_pl, response, source_nodes, query_time, response_time):
-        log_entry = {
-            'session_id': query_pl.session_id,
-            'query': query_pl.query,
-            'response': response,
-            'source_nodes': [
-                {
-                    'document_name': node.metadata.get('document_name', 'Unknown'),
-                    'subsection': node.metadata.get('subsection', 'Unknown'),
-                    'start_page': node.metadata.get('start_page', 'N/A'),
-                    'end_page': node.metadata.get('end_page', 'N/A')
-                } for node in source_nodes
-            ],
-            'query_time': query_time,
-            'response_time': response_time
-        }
-        
-        # Log as JSON for easy parsing
-        self.logger.info(json.dumps(log_entry))
-
-    def log_feedback(self, feedback):
-        log_entry = {
-            'turn_id': feedback.turn_id,
-            'session_id': feedback.session_id,
-            'feedback': feedback.feedback,
-            'timestamp': dt.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
-        self.logger.info(json.dumps(log_entry))

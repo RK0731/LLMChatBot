@@ -17,7 +17,7 @@ def enable_stream(logger:logging.Logger):
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-def parse_config(config_path: Union[str,Path]):
+def parse_config(config_path: Union[str,Path]) -> dict:
     """
     Load and parse config file from specified path
     """
@@ -76,7 +76,28 @@ def list_bedrock_foundation_models():
     except Exception as e:
         logger.debug(f"An error occurred: {e}")
 
-
+BUDDHA = """
+                     _ooOoo_
+                    o8888888o
+                    88" . "88
+                    (| -_- |)
+                    O\\  =  /O
+                 ____/`---'\\____
+               .'  \\\\|     |//  `.
+              /  \\\\|||  :  |||//  \\
+             /  _||||| -:- |||||-  \\
+             |   | \\\\\\  -  /// |   |
+             | \\_|  ''\\---/''  |   |
+             \\  .-\\__  `-`  ___/-. /
+           ___`. .'  /--.--\\  `. . __
+        ."" '<  `.___\\_<|>_/___.'  >'"".
+       | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |
+       \\  \\ `-.   \\_ __\\ /__ _/   .-` /  /
+  ======`-.____`-.___\\_____/___.-`____.-'======
+                     `=---='
+  菩提本无树, 明镜亦非台, 本来无BUG, 何必常修改
+  .............................................
+"""
 
 if __name__ == '__main__':
     enable_stream(logger)
