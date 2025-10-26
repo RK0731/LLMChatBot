@@ -34,7 +34,7 @@ from src.chat_engines import Converse_Bedrock
 from src.utils.loggers import setup_logging
 from src.utils.proj_paths import *
 from src.utils.utils import (
-    parse_config, 
+    get_service_config, 
     BUDDHA
 )
 
@@ -43,21 +43,20 @@ from src.utils.utils import (
 # =========================================================================================================
 setup_logging()
 logger = logging.getLogger("app_logger")
-CONFIG = parse_config(BACKEND_CONFIG)
 
 # executed before the application start up
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global CONVERSE_ENGINE
-    CONVERSE_ENGINE = initialize_converse_engine(logger=logger, config=CONFIG)
+    CONVERSE_ENGINE = initialize_converse_engine(logger=logger, config_path=BACKEND_CONFIG)
     logger.info(f"RenkeBot backend initialization completed, ready for handling requests.")
     logger.info(BUDDHA)
     yield
 # create the application with lifespan events, refer to https://fastapi.tiangolo.com/advanced/events/
 app = FastAPI(lifespan=lifespan)
 
-def initialize_converse_engine(logger:logging.Logger, config:dict) -> Converse_Bedrock:
-    return Converse_Bedrock(logger=logger, config=config)
+def initialize_converse_engine(logger:logging.Logger, config_path:Union[str,Path]=BACKEND_CONFIG) -> Converse_Bedrock:
+    return Converse_Bedrock(logger=logger, config_path=config_path)
 
 # =========================================================================================================
 # HTTP/HTTPS API endpoints
@@ -92,10 +91,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     # verify hosting environment
     if args.mode == 'dev':
-        _config = CONFIG['fastapi']['dev']
+        _config = get_service_config(BACKEND_CONFIG, 'fastapi')
         # Start application under HTTP protocol, enabling reload
         uvicorn.run("main:app", host=_config['host'], port=_config['port'], reload=True)
     elif args.mode == 'prod':
-        _config = CONFIG['fastapi']['prod']
+        _config = get_service_config(BACKEND_CONFIG, 'fastapi')
         # Start application under HTTP protocol
         uvicorn.run("main:app", host=_config['host'], port=_config['port'])        

@@ -16,18 +16,18 @@ import yaml
 # project imports
 from src.utils.proj_paths import *
 from src.utils.exceptions import *
-from src.utils.utils import parse_config
+from src.utils.utils import get_service_config
 
 
 class Converse_Bedrock():
-    def __init__(self, logger:logging.Logger, config:dict=parse_config(BACKEND_CONFIG)):
+    def __init__(self, logger:logging.Logger, config_path:Union[str,Path]=BACKEND_CONFIG):
         """Initializes the chat engine with Bedrock Chat Model."""
         try:
             self.logger = logger
             # parse config file
-            self.config = config
-            self._engine_config = self.config['converse_engine']
-            self._redis_config = self.config['redis']
+            self._engine_config = get_service_config(config_path, 'converse_engine')
+            print(self._engine_config)
+            self._redis_config = get_service_config(config_path, 'redis')
             # create llm and chain
             self.llm = ChatBedrockConverse(**self._engine_config)
             self.chain = self.get_conversation_chain()

@@ -1,0 +1,6 @@
+# In a separate Dockerfile or base stage
+FROM python:3.13-slim
+WORKDIR /deps
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt

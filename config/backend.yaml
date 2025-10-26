@@ -1,14 +1,11 @@
 fastapi:
-  dev:
-    host: "0.0.0.0"
-    port: 8080
-  prod:
-    host: "127.0.0.1"
-    port: 8080
+  host: "localhost"
+  port: 8080
 
 converse_engine:
   provider: "AWS"
   model_id: "anthropic.claude-3-haiku-20240307-v1:0"
+  region_name: "ap-southeast-1"
   temperature: 0.5
   max_tokens: 2048
 
@@ -28,8 +25,8 @@ RAG_embedding_model:
 
 backend_db:
   host: 
-    remote: "100.127.0.244"
-    ec2: "172.17.0.1" # Docker’s gateway IP
+    local: "localhost"
+    docker: "172.17.0.1" # Docker’s gateway IP
   port: 5432
   database: "xxx"
   user: "xxx"
@@ -37,7 +34,9 @@ backend_db:
   connect_timeout: 7
 
 redis:
-  host: "localhost"
+  host: 
+    local: "localhost"
+    docker: "172.17.0.1" # Docker’s gateway IP
   port: 6379
   db: 0
   ttl: 7200

@@ -1,0 +1,11 @@
+# Use base image
+FROM renkebot-base-image:latest
+ENV PYTHONPATH=/app
+
+RUN apt-get update && apt-get install -y make && rm -rf /var/lib/apt/lists/*:
+
+COPY . /app
+WORKDIR /app
+
+EXPOSE 6379 8080
+CMD ["python", "main.py"]
